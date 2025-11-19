@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signupUser } from "../api/auth";
 
 export default function Signup() {
@@ -28,33 +28,56 @@ export default function Signup() {
     };
 
     return (
-        <div>
-            <h2>Sign up</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="name"
-                    value={form.name}
-                    onChange={handleChange}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="email"
-                    value={form.email}
-                    onChange={handleChange}
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    value={form.password}
-                    onChange={handleChange}
-                />
-                <button type="submit">Sign up</button>
-            </form>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-lg">
+                <h2 className="text-2x1 font-semibold text-center mb-6">Sign up</h2>
+
+                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <button
+                        type="submit"
+                        className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                        Sign up
+                    </button>
+                    <p>If you already have an account, {" "}
+                        <Link
+                            to="/login"
+                            className="text-blue-500 hover:underline"
+                        >
+                            Login here
+                        </Link>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 }
