@@ -9,23 +9,25 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         if (token) {
-        setAuthToken(token);
+            setAuthToken(token);
         // Optionally decode token to get user info or fetch /me from backend.
-        setUser({}); // placeholder: or fetch user profile
+        // setUser({}); // placeholder: or fetch user profile
         } else {
-        setAuthToken(null);
-        setUser(null);
+            setAuthToken(null);
+            setUser(null);
         }
     }, [token]);
 
-    const login = (tokenValue) => {
+    const login = (tokenValue, userData) => {
         localStorage.setItem("token", tokenValue);
         setToken(tokenValue);
+        setUser(userData)
     };
 
     const logout = () => {
         localStorage.removeItem("token");
         setToken(null);
+        setUser(null);
     };
 
     return (

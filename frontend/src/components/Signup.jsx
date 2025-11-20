@@ -5,6 +5,7 @@ import { signupUser } from "../api/auth";
 export default function Signup() {
     const [form, setForm] = useState({ name: "", email: "", password: "" });
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) =>
@@ -21,8 +22,11 @@ export default function Signup() {
 
         try {
             const res = await signupUser(form);
-            navigate("/login");
+            setError("");
+            setSuccess("Account created successfully! Redirecting");
+            setTimeout(() => navigate("/login"), 1500);
         } catch (err) {
+            setSuccess("");
             setError(err?.response?.data?.message || "Signup failed");
         }
     };
@@ -31,7 +35,8 @@ export default function Signup() {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-lg">
                 <h2 className="text-2x1 font-semibold text-center mb-6">Sign up</h2>
-
+                
+                {success && <p className="text-green-600 text-center mb-4">{success}</p>}
                 {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
                 <form
@@ -68,15 +73,16 @@ export default function Signup() {
                     >
                         Sign up
                     </button>
-                    <p>If you already have an account, {" "}
-                        <Link
-                            to="/login"
-                            className="text-blue-500 hover:underline"
-                        >
-                            Login here
-                        </Link>
-                    </p>
+
                 </form>
+                <p className="mt-4">If you already have an account, {" "}
+                    <Link
+                        to="/login"
+                        className="text-blue-500 hover:underline"
+                    >
+                        Login here
+                    </Link>
+                </p>
             </div>
         </div>
     );

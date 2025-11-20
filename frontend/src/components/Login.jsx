@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
-    const { login } = useContext(AuthContext);
+    const { login, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,12 +15,15 @@ export default function Login() {
         e.preventDefault();
         setError("");
         try {
-        const res = await loginUser(form);
-        // expected: res.data = { token, user }
-        const token = res.data.token;
-        if (!token) throw new Error("No token returned");
-        login(token); // stores token in localStorage + set header
-        navigate("/dashboard");
+            const res = await loginUser(form);
+            const { token, user } = res.data;
+
+            if (!token) throw new Error("No token returned");
+
+            login(token); // stores token in localStorage + set header
+            setUser(user); // save user object
+
+            navigate("/dashboard");
         } catch (err) {
         setError(err?.response?.data?.message || "Login failed");
         }
@@ -58,6 +61,14 @@ export default function Login() {
                         Log in
                     </button>
                 </form>
+                <p className="mt-4">If you have an account, You must create one {" "}
+                    <Link
+                        to="/signin"
+                        className="text-blue-500 hover:underline"
+                    >
+                        here
+                    </Link>
+                </p>
             </div>
         </div>
     );
