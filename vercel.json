@@ -1,0 +1,15 @@
+{
+    "projects": [
+        {
+        "src": "frontend/package.json",
+        "use": "@vercel/static-build",
+        "outputDirectory": "frontend/build",
+        "name": "frontend"
+        },
+        {
+        "src": "backend/package.json",
+        "use": "@vercel/node",
+        "name": "backend"
+        }
+    ]
+}
