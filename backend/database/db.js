@@ -9,7 +9,7 @@ const connectDB = async () => {
     try {
         const db = await mongoose.connect(process.env.MONGO_URI);
         isConnected = db.connections[0].readyState;
-        console.log("MongoDB Connected");
+        console.log("MongoDB Altas Connected");
     } catch (error) {
         console.error("MongoDB connection error:", error);
         process.exit(1); // stop the app if DB fails
